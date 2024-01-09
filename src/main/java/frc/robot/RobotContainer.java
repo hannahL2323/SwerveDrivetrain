@@ -44,37 +44,39 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-                                                          () -> MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driverController.getRightX(),
-                                                          () -> -driverController.getRightY(),
-                                                          false);
+    
+    // AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+    //                                                       () -> MathUtil.applyDeadband(driverController.getLeftY(),
+    //                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
+    //                                                       () -> MathUtil.applyDeadband(driverController.getLeftX(),
+    //                                                                                    OperatorConstants.LEFT_X_DEADBAND),
+    //                                                       () -> -driverController.getRightX(),
+    //                                                       () -> -driverController.getRightY(),
+    //                                                       false);
 
-    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-                                                                         () ->
-                                                                             MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-                                                                         () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                                      OperatorConstants.LEFT_X_DEADBAND),
-                                                                         () -> driverController.getRawAxis(2), false);
+    // AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+    //                                                                      () ->
+    //                                                                          MathUtil.applyDeadband(driverController.getLeftY(),
+    //                                                                                                 OperatorConstants.LEFT_Y_DEADBAND),
+    //                                                                      () -> MathUtil.applyDeadband(driverController.getLeftX(),
+    //                                                                                                   OperatorConstants.LEFT_X_DEADBAND),
+    //                                                                      () -> driverController.getRawAxis(2), false);
 
-    TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
-                                                    () -> MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                 OperatorConstants.LEFT_Y_DEADBAND),
-                                                    () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                                    () -> driverController.getRawAxis(2), () -> true, false, true);
-    TeleopDrive closedFieldRel = new TeleopDrive(
+    // TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
+    //                                                 () -> MathUtil.applyDeadband(driverController.getLeftY(),
+    //                                                                              OperatorConstants.LEFT_Y_DEADBAND),
+    //                                                 () -> MathUtil.applyDeadband(driverController.getLeftX(),
+    //                                                                              OperatorConstants.LEFT_X_DEADBAND),
+    //                                                 () -> driverController.getRawAxis(2), () -> true, false, true);
+    TeleopDrive teleopDrive = new TeleopDrive(
         drivebase,
-        () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> true, false, true);
+        () -> MathUtil.applyDeadband(-driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> driverController.getRightX(), () -> true, true, false);
 
-    drivebase.setDefaultCommand(!RobotBase.isSimulation() ? closedAbsoluteDrive : closedFieldAbsoluteDrive);
-    // drivebase.setDefaultCommand(closedFieldRel);
+    drivebase.setDefaultCommand(teleopDrive);
+
+    
   }
 
   
@@ -94,6 +96,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
+  
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(null);

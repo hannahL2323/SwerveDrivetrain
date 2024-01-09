@@ -8,6 +8,16 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.photonvision.PhotonCamera;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +29,29 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  // private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  // final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+
+  // final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+
+  // // Angle between horizontal and the camera.
+  // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+
+  // // How far from the target we want to be
+  // final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+  // // Change this to match the name of your camera
+  // PhotonCamera camera = new PhotonCamera("GoodCamera");
+
+  // // PID constants should be tuned per robot
+  // final double LINEAR_P = 0.1;
+  // final double LINEAR_D = 0.0;
+  // PIDController forwardController = new PIDController(LINEAR_P, 0, LINEAR_D);
+  // final double ANGULAR_P = 0.1;
+  // final double ANGULAR_D = 0.0;
+  // PIDController turnController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,6 +77,31 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
+
+
+    // double forwardSpeed;
+    // double rotationSpeed;
+    // forwardSpeed = -xboxController.getRightY();
+    // if (xboxController.getAButton()) {
+    //     // Vision-alignment mode
+    //     // Query the latest result from PhotonVision
+    //     var result = camera.getLatestResult();
+    //     if (result.hasTargets()) {
+    //         // Calculate angular turn power
+    //         // -1.0 required to ensure positive PID controller effort _increases_ yaw
+    //         rotationSpeed = -turnController.calculate(result.getBestTarget().getYaw(), 0);
+    //     } else {
+    //         // If we have no targets, stay still.
+    //         rotationSpeed = 0;
+    //     }
+    // } else {
+    //     // Manual Driver Mode
+    //     rotationSpeed = xboxController.getLeftX();
+    // }
+    // // Use our forward/turn speeds to control the drivetrain
+    // drive.arcadeDrive(forwardSpeed, rotationSpeed);
+
     CommandScheduler.getInstance().run();
   }
 
