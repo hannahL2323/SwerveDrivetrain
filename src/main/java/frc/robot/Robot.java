@@ -18,6 +18,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.photonvision.PhotonCamera;
 
+// Led imports
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+// import frc.robot.subsystems.LEDs;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +35,12 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  // Led code
+  private AddressableLED led0;
+  private AddressableLED led1;
+  private AddressableLEDBuffer led0Buffer;
+  private AddressableLEDBuffer led1Buffer;
 
   // private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -62,6 +74,13 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    // Led code
+    led0 = new AddressableLED(0);
+    led0Buffer = new AddressableLEDBuffer(60);
+    led0.setLength(led0Buffer.getLength());
+    led0.setData(led0Buffer);
+    led0.start();
   }
 
   /**
@@ -78,6 +97,11 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
 
+    // Led code
+    for (int i = 0; i < led0Buffer.getLength(); i++) {
+      led0Buffer.setRGB(i, 51, 255, 51);
+    }
+    led0.setData(led0Buffer);
 
 
     // double forwardSpeed;
