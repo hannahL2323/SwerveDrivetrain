@@ -68,27 +68,11 @@ public class TeleopDrive extends CommandBase {
     SmartDashboard.putNumber("vX", xVelocity);
     SmartDashboard.putNumber("vY", yVelocity);
     SmartDashboard.putNumber("omega", angVelocity);
-    if (headingCorrection)
-    {
-      // Estimate the desired angle in radians.
-      angle += (angVelocity * (timer.get() - lastTime)) * controller.config.maxAngularVelocity;
-      // Get the desired ChassisSpeeds given the desired angle and current angle.
-      ChassisSpeeds correctedChassisSpeeds = controller.getTargetSpeeds(xVelocity, yVelocity, angle,
-                                                                        swerve.getHeading().getRadians());
-      // Drive using given data points.
-      swerve.drive(
-          SwerveController.getTranslation2d(correctedChassisSpeeds),
-          correctedChassisSpeeds.omegaRadiansPerSecond,
-          driveMode.getAsBoolean(),
-          isOpenLoop);
-      lastTime = timer.get();
-    } else
-    {
-      // Drive using raw values.
-      swerve.drive(new Translation2d(xVelocity * controller.config.maxSpeed, yVelocity * controller.config.maxSpeed),
-                   angVelocity * controller.config.maxAngularVelocity,
-                   driveMode.getAsBoolean(), isOpenLoop);
-    }
+
+    // Drive using raw values.
+    swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
+                 angVelocity * controller.config.maxAngularVelocity,
+                 driveMode.getAsBoolean(), isOpenLoop);
   }
 
   // Called once the command ends or is interrupted.
